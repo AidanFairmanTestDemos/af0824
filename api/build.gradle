@@ -1,0 +1,6 @@
+jar{
+    archiveClassifier = ''
+}
+bootJar{
+    enabled = false
+}

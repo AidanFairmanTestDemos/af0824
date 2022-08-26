@@ -1,0 +1,4 @@
+rootProject.name = 'tool_rental'
+
+include 'api'
+include 'service'
