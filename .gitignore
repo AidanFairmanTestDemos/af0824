@@ -26,6 +26,7 @@ hs_err_pid*
 .gradle
 # build outputs from gradle builds
 **/build/
+**/bin
 
 # macOS file from finder
 .DS_Store
