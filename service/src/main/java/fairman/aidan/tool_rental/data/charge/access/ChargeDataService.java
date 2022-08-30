@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChargeDataService {
   private static final String RATE = "rate";
   private static final String WEEKDAY = "weekday";
@@ -21,10 +23,10 @@ public class ChargeDataService {
   private DataSource dataSource;
 
   public ChargeDataModel getToolCharge(String toolCode){
-    String query = "SELECT rate,"
-        + "   " + WEEKDAY + ","
-        + "   " + WEEKEND + ","
-        + "   " + HOLIDAY
+    String query = "SELECT tc.rate,"
+        + " tc." + WEEKDAY + ","
+        + " tc." + WEEKEND + ","
+        + " tc." + HOLIDAY
         + " FROM tool_charge AS tc"
         + " JOIN tool_info AS ti on ti.tool_type_id = tc.tool_type_id"
         + " WHERE ti.id = ?";
