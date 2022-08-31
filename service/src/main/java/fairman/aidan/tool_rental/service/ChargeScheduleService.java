@@ -11,19 +11,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ChargeScheduleService {
+
   private static final List<DayOfWeek> WEEKEND = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
-  @Autowired private HolidayService holidayService;
-  public ToolCharge getToolChargeSchedule(ToolSchedule schedule, ToolCharge charges){
+  @Autowired
+  private HolidayService holidayService;
+
+  public ToolCharge getToolChargeSchedule(ToolSchedule schedule, ToolCharge charges) {
     LocalDate startDate = schedule.getRentalDate();
     int chargeableDays = 0;
     boolean chargeableDay = true;
-    for (int i = 0; i < schedule.getRentalDays() ; i++) {
+    for (int i = 0; i < schedule.getRentalDays(); i++) {
       chargeableDay = true;
       LocalDate day = startDate.plusDays(i);
-      if(!charges.isOnWeekends() && WEEKEND.contains(day)){
+      if (!charges.isOnWeekends() && WEEKEND.contains(day)) {
         chargeableDay = false;
       }
-      if(chargeableDay && !charges.isOnHolidays() && holidayService.isHoliday(day)){
+      if (chargeableDay && !charges.isOnHolidays() && holidayService.isHoliday(day)) {
         chargeableDay = false;
       }
       chargeableDays = chargeableDay ? chargeableDays + 1 : chargeableDays;

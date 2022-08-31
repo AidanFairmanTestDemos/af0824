@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DescriptionService {
-  @Autowired
-  private InfoDataService infoDataService;
 
   @Autowired
   ConversionService conversionService;
+  @Autowired
+  private InfoDataService infoDataService;
 
-  ToolDescription getDescription(String toolCode){
+  ToolDescription getDescription(String toolCode) {
     InfoDataModel info = infoDataService.getToolInfo(toolCode);
     return conversionService.convert(info, ToolDescription.class);
   }

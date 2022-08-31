@@ -12,8 +12,8 @@ public class ToolAgreementResponse {
   @NonNull String toolType;
   @NonNull String toolBrand;
   int rentalDays;
-  @NonNull LocalDateTime checkoutDate;
-  @NonNull LocalDateTime returnDate;
+  @NonNull String checkoutDate;
+  @NonNull String returnDate;
   double dailyRate;
   int chargeableDays;
   double preDiscountCharge;

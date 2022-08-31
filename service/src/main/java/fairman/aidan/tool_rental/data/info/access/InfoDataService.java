@@ -1,6 +1,5 @@
 package fairman.aidan.tool_rental.data.info.access;
 
-import fairman.aidan.tool_rental.data.charge.model.ChargeDataModel;
 import fairman.aidan.tool_rental.data.info.model.InfoDataModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InfoDataService {
+
   private static final String BRAND = "brand";
   private static final String NAME = "name";
   private static final String ID = "id";
   @Autowired
   private DataSource dataSource;
 
-  public InfoDataModel getToolInfo(String toolCode){
+  public InfoDataModel getToolInfo(String toolCode) {
     String query = "SELECT ti." + ID + ","
         + " tt." + NAME + ","
         + " ti." + BRAND
@@ -26,15 +26,19 @@ public class InfoDataService {
         + " JOIN tool_type AS tt ON tt.id = ti.tool_type_id"
         + " WHERE ti.id = ?";
 
-    try(Connection connection = dataSource.getConnection()){
-      try(PreparedStatement statement = connection.prepareStatement(query)){
+    try (Connection connection = dataSource.getConnection()) {
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, toolCode);
-        try(ResultSet resultSet = statement.executeQuery()){
-          return InfoDataModel.builder()
-              .brand(resultSet.getString(BRAND))
-              .id(resultSet.getString(ID))
-              .type(resultSet.getString(NAME))
-              .build();
+        try (ResultSet resultSet = statement.executeQuery()) {
+          if(resultSet.first()) {
+            return InfoDataModel.builder()
+                .brand(resultSet.getString(BRAND))
+                .id(resultSet.getString(ID))
+                .type(resultSet.getString(NAME))
+                .build();
+          }else{
+            throw new SQLException();
+          }
         }
       }
     } catch (SQLException e) {

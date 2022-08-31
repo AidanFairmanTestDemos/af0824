@@ -7,6 +7,7 @@ import lombok.NonNull;
 @Data
 @Builder
 public class ToolDescription {
+
   @NonNull
   String toolCode;
   @NonNull

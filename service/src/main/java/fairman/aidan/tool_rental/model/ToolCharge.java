@@ -4,15 +4,15 @@ import fairman.aidan.tool_rental.errors.DiscountOutOfRangeException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
 
 @Data
 public class ToolCharge {
-  private static final DecimalFormat ROUNDING = new DecimalFormat("0.00");
 
-  static{
+  private static final DecimalFormat ROUNDING = new DecimalFormat("0.000");
+
+  static {
     ROUNDING.setRoundingMode(RoundingMode.HALF_UP);
   }
 
@@ -28,16 +28,19 @@ public class ToolCharge {
   double discountAmount;
   @Setter(value = AccessLevel.NONE)
   double charge;
-  public ToolCharge(double rate, int discount, boolean weekdays, boolean weekends, boolean holidays){
+
+  public ToolCharge(double rate, int discount, boolean weekdays, boolean weekends, boolean holidays)
+      throws DiscountOutOfRangeException {
     this.rate = rate;
-    if(discount < 0 || discount > 100){
+    if (discount < 0 || discount > 100) {
       throw new DiscountOutOfRangeException();
     }
-    this.discountPercent = (double)discount / 100d;
+    this.discountPercent = (double) discount / 100d;
     this.onWeekdays = weekdays;
     this.onWeekends = weekends;
     this.onHolidays = holidays;
   }
+
   public void setChargeableDays(int chargeableDays) {
     this.chargeableDays = chargeableDays;
     this.preDiscountCharge = round(rate * chargeableDays);
@@ -45,7 +48,7 @@ public class ToolCharge {
     this.charge = round(preDiscountCharge - discountAmount);
   }
 
-  private double round(double value){
+  private double round(double value) {
     return Double.parseDouble(ROUNDING.format(value));
   }
 }

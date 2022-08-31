@@ -1,5 +1,6 @@
 package fairman.aidan.tool_rental.model;
 
+import fairman.aidan.tool_rental.errors.RentalDaysRangeException;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Builder.ObtainVia;
@@ -7,17 +8,26 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-@Builder
 public class ToolSchedule {
+
   @NonNull
   LocalDate rentalDate;
-  @NonNull
+
   int rentalDays;
 
-  @ObtainVia(method = "generateEndDate")
   LocalDate returnDate;
 
-  public LocalDate generateEndDate() {
+  @Builder
+  ToolSchedule(LocalDate rentalDate, int rentalDays) throws RentalDaysRangeException {
+    this.rentalDate = rentalDate;
+    if (rentalDays < 1) {
+      throw new RentalDaysRangeException();
+    }
+    this.rentalDays = rentalDays;
+    this.returnDate = generateEndDate();
+  }
+
+  private LocalDate generateEndDate() {
     return rentalDate.plusDays(rentalDays);
   }
 }

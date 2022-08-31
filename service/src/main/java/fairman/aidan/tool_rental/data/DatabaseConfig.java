@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-public class DatabaseConfig{
+public class DatabaseConfig {
 
   @Value("${spring.datasource.url}")
   private String url;
@@ -19,7 +19,7 @@ public class DatabaseConfig{
   private String driverClassName;
 
   @Bean
-  public DataSource dataSource(){
+  public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setUrl(url);
     dataSource.setUsername(user);
