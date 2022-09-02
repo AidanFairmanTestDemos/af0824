@@ -1,6 +1,6 @@
 package fairman.aidan.tool_rental.converter;
 
-import fairman.aidan.tool_rental.data.info.model.InfoDataModel;
+import fairman.aidan.tool_rental.persistence.info.model.InfoDataModel;
 import fairman.aidan.tool_rental.model.ToolDescription;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package fairman.aidan.tool_rental.data;
+package fairman.aidan.tool_rental.persistence;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;

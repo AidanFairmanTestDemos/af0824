@@ -26,7 +26,8 @@ public class ToolAgreementService {
       LocalDate startDate)
       throws DiscountOutOfRangeException, RentalDaysRangeException {
     ToolDescription description = descriptionService.getDescription(toolCode);
-    ToolCharge charges = chargeService.getChargesForTool(toolCode, discount);
+    ToolCharge charges = chargeService.getChargesForTool(toolCode);
+    charges.setDiscount(discount);
     ToolSchedule schedule = ToolSchedule.builder()
         .rentalDate(startDate)
         .rentalDays(rentalDays)

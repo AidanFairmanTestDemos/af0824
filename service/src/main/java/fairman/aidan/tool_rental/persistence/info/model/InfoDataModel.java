@@ -1,4 +1,4 @@
-package fairman.aidan.tool_rental.data.info.model;
+package fairman.aidan.tool_rental.persistence.info.model;
 
 import lombok.Builder;
 import lombok.Data;

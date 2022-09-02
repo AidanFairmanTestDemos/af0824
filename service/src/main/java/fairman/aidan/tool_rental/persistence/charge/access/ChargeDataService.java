@@ -1,6 +1,6 @@
-package fairman.aidan.tool_rental.data.charge.access;
+package fairman.aidan.tool_rental.persistence.charge.access;
 
-import fairman.aidan.tool_rental.data.charge.model.ChargeDataModel;
+import fairman.aidan.tool_rental.persistence.charge.model.ChargeDataModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

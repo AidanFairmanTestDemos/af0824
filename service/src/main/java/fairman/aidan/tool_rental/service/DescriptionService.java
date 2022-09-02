@@ -1,7 +1,7 @@
 package fairman.aidan.tool_rental.service;
 
-import fairman.aidan.tool_rental.data.info.access.InfoDataService;
-import fairman.aidan.tool_rental.data.info.model.InfoDataModel;
+import fairman.aidan.tool_rental.persistence.info.access.InfoDataService;
+import fairman.aidan.tool_rental.persistence.info.model.InfoDataModel;
 import fairman.aidan.tool_rental.model.ToolDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;

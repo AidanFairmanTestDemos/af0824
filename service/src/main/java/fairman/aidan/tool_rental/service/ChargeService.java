@@ -1,25 +1,45 @@
 package fairman.aidan.tool_rental.service;
 
-import fairman.aidan.tool_rental.data.charge.access.ChargeDataService;
-import fairman.aidan.tool_rental.data.charge.model.ChargeDataModel;
-import fairman.aidan.tool_rental.errors.DiscountOutOfRangeException;
 import fairman.aidan.tool_rental.model.ToolCharge;
-import org.springframework.beans.factory.annotation.Autowired;
+import fairman.aidan.tool_rental.persistence.charge.access.ChargeDataService;
+import fairman.aidan.tool_rental.persistence.charge.model.ChargeDataModel;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ChargeService {
 
-  @Autowired
-  private ChargeDataService chargeDataService;
+  private static final DecimalFormat ROUNDING = new DecimalFormat("0.00");
 
-  ToolCharge getChargesForTool(String toolCode, int discount) throws DiscountOutOfRangeException {
+  static {
+    ROUNDING.setRoundingMode(RoundingMode.HALF_UP);
+  }
+
+  @NonNull
+  private final ChargeDataService chargeDataService;
+
+  public ToolCharge getChargesForTool(String toolCode) {
     ChargeDataModel model = chargeDataService.getToolCharge(toolCode);
-    return new ToolCharge(
-        model.getRate(),
-        discount,
-        model.isOnWeekdays(),
-        model.isOnWeekends(),
-        model.isOnHolidays());
+    return ToolCharge.builder()
+        .rate(model.getRate())
+        .weekdays(model.isOnWeekdays())
+        .weekends(model.isOnWeekends())
+        .holidays(model.isOnHolidays())
+        .build();
+  }
+
+  public ToolCharge calculateToolCharges(ToolCharge charges) {
+    charges.setPreDiscountCharge(round(charges.getRate() * charges.getChargeableDays()));
+    charges.setDiscountAmount(round(charges.getPreDiscountCharge() * charges.getDiscountPercent()));
+    charges.setCharge(round(charges.getPreDiscountCharge() - charges.getDiscountAmount()));
+    return charges;
+  }
+
+  private double round(double value) {
+    return Double.parseDouble(ROUNDING.format(value));
   }
 }

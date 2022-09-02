@@ -1,4 +1,4 @@
-package fairman.aidan.tool_rental.data.charge.model;
+package fairman.aidan.tool_rental.persistence.charge.model;
 
 import lombok.Builder;
 import lombok.Value;

@@ -1,6 +1,6 @@
-package fairman.aidan.tool_rental.data.info.access;
+package fairman.aidan.tool_rental.persistence.info.access;
 
-import fairman.aidan.tool_rental.data.info.model.InfoDataModel;
+import fairman.aidan.tool_rental.persistence.info.model.InfoDataModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
