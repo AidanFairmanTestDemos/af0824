@@ -18,21 +18,17 @@ public class ToolAgreementService {
   @Autowired
   private ChargeService chargeService;
   @Autowired
-  private ChargeScheduleService chargeScheduleService;
-  @Autowired
   private DescriptionService descriptionService;
 
   public ToolAgreement generateToolAgreement(String toolCode, int rentalDays, int discount,
       LocalDate startDate)
       throws DiscountOutOfRangeException, RentalDaysRangeException {
     ToolDescription description = descriptionService.getDescription(toolCode);
-    ToolCharge charges = chargeService.getChargesForTool(toolCode);
-    charges.setDiscount(discount);
     ToolSchedule schedule = ToolSchedule.builder()
         .rentalDate(startDate)
         .rentalDays(rentalDays)
         .build();
-    charges = chargeScheduleService.getToolChargeSchedule(schedule, charges);
+    ToolCharge charges = chargeService.getChargesForTool(toolCode, discount, schedule);
     String agreementText = agreementGenerationService.generateAgreement(description, charges,
         schedule);
     return ToolAgreement.builder()

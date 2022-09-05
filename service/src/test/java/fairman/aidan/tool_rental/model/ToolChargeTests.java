@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import fairman.aidan.tool_rental.errors.DiscountOutOfRangeException;
+import fairman.aidan.tool_rental.model.ToolCharge.ToolChargeBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,21 +21,20 @@ public class ToolChargeTests {
   private static final int DISCOUNT = 25;
   private static final double DISCOUNT_PERCENT = 0.25;
 
-  private ToolCharge charges;
+  private ToolChargeBuilder chargesBuilder;
 
   @BeforeEach
-  public void beforeEach() {
-    charges = ToolCharge.builder()
+  public void beforeEach() throws DiscountOutOfRangeException {
+    chargesBuilder = ToolCharge.builder()
         .rate(RATE)
         .weekends(ON_WEEKENDS)
         .weekdays(ON_WEEKDAYS)
-        .holidays(ON_HOLIDAYS)
-        .build();
+        .holidays(ON_HOLIDAYS);
   }
 
   @Test
   public void discountSetsProperly() throws DiscountOutOfRangeException {
-    charges.setDiscount(DISCOUNT);
+    ToolCharge charges = chargesBuilder.discount(DISCOUNT).build();
     assertEquals(DISCOUNT_PERCENT, charges.getDiscountPercent());
   }
 
@@ -42,7 +42,7 @@ public class ToolChargeTests {
   public void discountMayNotBeNegative() {
     final int NEGATIVE_DISCOUNT = -1;
     assertThrows(DiscountOutOfRangeException.class, () -> {
-      charges.setDiscount(NEGATIVE_DISCOUNT);
+      chargesBuilder.discount(NEGATIVE_DISCOUNT).build();
     });
   }
 
@@ -50,7 +50,7 @@ public class ToolChargeTests {
   public void discountMayNotExceed100() {
     final int BIG_DISCOUNT = 101;
     assertThrows(DiscountOutOfRangeException.class, () -> {
-      charges.setDiscount(BIG_DISCOUNT);
+      chargesBuilder.discount(BIG_DISCOUNT).build();
     });
   }
 
@@ -60,13 +60,13 @@ public class ToolChargeTests {
     final int MID_DISCOUNT = 50;
     final int FULL_DISCOUNT = 100;
     assertDoesNotThrow(() -> {
-      charges.setDiscount(NO_DISCOUNT);
+      chargesBuilder.discount(NO_DISCOUNT).build();
     });
     assertDoesNotThrow(() -> {
-      charges.setDiscount(MID_DISCOUNT);
+      chargesBuilder.discount(MID_DISCOUNT).build();
     });
     assertDoesNotThrow(() -> {
-      charges.setDiscount(FULL_DISCOUNT);
+      chargesBuilder.discount(FULL_DISCOUNT).build();
     });
   }
 }

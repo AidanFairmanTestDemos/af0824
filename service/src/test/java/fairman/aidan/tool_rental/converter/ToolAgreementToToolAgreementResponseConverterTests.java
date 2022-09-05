@@ -56,11 +56,13 @@ public class ToolAgreementToToolAgreementResponseConverterTests {
         .rentalDays(DAYS)
         .rentalDate(CHECKOUT_DATE)
         .build();
-    ToolCharge charge = new ToolCharge(RATE,
-        true,
-        true,
-        false);
-    charge.setDiscount((int) (DISCOUNT_PERCENT * 100.0));
+    ToolCharge charge = ToolCharge.builder()
+        .rate(RATE)
+        .discount((int) (DISCOUNT_PERCENT * 100.0))
+        .weekends(true)
+        .weekdays(true)
+        .holidays(false)
+        .build();
     charge.setChargeableDays(CHARGEABLE);
     ToolDescription description = ToolDescription.builder()
         .type(TYPE)

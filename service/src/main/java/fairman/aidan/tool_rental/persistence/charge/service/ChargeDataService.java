@@ -1,4 +1,4 @@
-package fairman.aidan.tool_rental.persistence.charge.access;
+package fairman.aidan.tool_rental.persistence.charge.service;
 
 import fairman.aidan.tool_rental.persistence.charge.model.ChargeDataModel;
 import java.sql.Connection;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class ChargeDataService {
   @Autowired
   private DataSource dataSource;
 
+  @SneakyThrows
   public ChargeDataModel getToolCharge(String toolCode) {
     String query = "SELECT tc.rate,"
         + " tc." + WEEKDAY + ","
@@ -32,7 +34,7 @@ public class ChargeDataService {
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, toolCode);
         try (ResultSet resultSet = statement.executeQuery()) {
-          if(resultSet.first()) {
+          if (resultSet.first()) {
             double rate = resultSet.getDouble(RATE);
             boolean onWeekday = resultSet.getBoolean(WEEKDAY);
             boolean onWeekend = resultSet.getBoolean(WEEKEND);
@@ -43,13 +45,13 @@ public class ChargeDataService {
                 .onWeekends(onWeekend)
                 .rate(rate)
                 .build();
-          }else{
+          } else {
             throw new SQLException();
           }
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Could not find charge information for tool code " + toolCode, e);
+      throw new SQLException("Could not fetch charge information for tool code " + toolCode, e);
     }
   }
 }

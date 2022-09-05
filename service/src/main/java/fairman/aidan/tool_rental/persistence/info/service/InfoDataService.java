@@ -1,4 +1,4 @@
-package fairman.aidan.tool_rental.persistence.info.access;
+package fairman.aidan.tool_rental.persistence.info.service;
 
 import fairman.aidan.tool_rental.persistence.info.model.InfoDataModel;
 import java.sql.Connection;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class InfoDataService {
   @Autowired
   private DataSource dataSource;
 
+  @SneakyThrows
   public InfoDataModel getToolInfo(String toolCode) {
     String query = "SELECT ti." + ID + ","
         + " tt." + NAME + ","
@@ -30,19 +32,19 @@ public class InfoDataService {
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, toolCode);
         try (ResultSet resultSet = statement.executeQuery()) {
-          if(resultSet.first()) {
+          if (resultSet.first()) {
             return InfoDataModel.builder()
                 .brand(resultSet.getString(BRAND))
                 .id(resultSet.getString(ID))
                 .type(resultSet.getString(NAME))
                 .build();
-          }else{
+          } else {
             throw new SQLException();
           }
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Could not find data info for tool code " + toolCode, e);
+      throw new SQLException("Could not fetch data info for tool code " + toolCode, e);
     }
   }
 }

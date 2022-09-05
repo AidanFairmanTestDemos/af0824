@@ -21,17 +21,15 @@ public class ToolCharge {
   double charge;
 
   @Builder
-  public ToolCharge(double rate, boolean weekdays, boolean weekends, boolean holidays) {
-    this.rate = rate;
-    this.onWeekdays = weekdays;
-    this.onWeekends = weekends;
-    this.onHolidays = holidays;
-  }
-
-  public void setDiscount(int discount) throws DiscountOutOfRangeException {
+  public ToolCharge(double rate, int discount, boolean weekdays, boolean weekends, boolean holidays)
+      throws DiscountOutOfRangeException {
     if (discount < 0 || discount > 100) {
       throw new DiscountOutOfRangeException();
     }
     this.discountPercent = (double) discount / 100.0;
+    this.rate = rate;
+    this.onWeekdays = weekdays;
+    this.onWeekends = weekends;
+    this.onHolidays = holidays;
   }
 }
