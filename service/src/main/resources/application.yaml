@@ -1,6 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:tool_rental;DB_CLOSE_DELAY=-1
     driverClassName: org.h2.Driver
     username: sa
     password: sa
+app:
+  version: 0.0.1-SNAPSHOT
+springdoc:
+  api-docs:
+    path: /agreement
