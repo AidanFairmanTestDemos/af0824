@@ -1,6 +1,6 @@
-jar{
+jar {
     archiveClassifier = ''
 }
-bootJar{
+bootJar {
     enabled = false
 }

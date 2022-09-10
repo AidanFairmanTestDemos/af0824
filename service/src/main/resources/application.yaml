@@ -4,3 +4,8 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: sa
+app:
+  version: 0.0.1-SNAPSHOT
+springdoc:
+  api-docs:
+    path: /agreement
