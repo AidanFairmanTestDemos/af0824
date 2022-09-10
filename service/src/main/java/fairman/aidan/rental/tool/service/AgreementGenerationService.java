@@ -19,12 +19,12 @@ public class AgreementGenerationService {
           + "\tRental Days: %d " + LINE_BREAK
           + "\tCheck-out Date: %s " + LINE_BREAK
           + "\tDue Date: %s " + LINE_BREAK
-          + "\tDaily Rate: %.2f " + LINE_BREAK
+          + "\tDaily Rate: $%.2f " + LINE_BREAK
           + "\tChargeable Days: %d " + LINE_BREAK
-          + "\tPre-discount charge: %.2f " + LINE_BREAK
+          + "\tPre-discount charge: $%.2f " + LINE_BREAK
           + "\tDiscount Percent: %d%% " + LINE_BREAK
-          + "\tDiscount Amount: %.2f " + LINE_BREAK
-          + "\tTotal Charge: %.2f " + LINE_BREAK
+          + "\tDiscount Amount: $%.2f " + LINE_BREAK
+          + "\tTotal Charge: $%.2f " + LINE_BREAK
           + "Please present to customer and keep a copy for store records.";
 
   public String generateAgreement(
