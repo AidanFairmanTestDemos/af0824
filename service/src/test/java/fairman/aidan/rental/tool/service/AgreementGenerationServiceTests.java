@@ -69,11 +69,11 @@ public class AgreementGenerationServiceTests {
     assertTrue(agreement.contains("Rental Days: " + RENTAL_DAYS));
     assertTrue(agreement.contains("Check-out Date: " + FORMATTER.format(RENTAL_DATE)));
     assertTrue(agreement.contains("Due Date: " + FORMATTER.format(RETURN_DATE)));
-    assertTrue(agreement.contains(String.format("Daily Rate: %.2f", RATE)));
+    assertTrue(agreement.contains(String.format("Daily Rate: $%.2f", RATE)));
     assertTrue(agreement.contains("Chargeable Days: " + CHARGEABLE_DAYS));
-    assertTrue(agreement.contains("Pre-discount charge: " + PRE_DISCOUNT));
+    assertTrue(agreement.contains("Pre-discount charge: $" + PRE_DISCOUNT));
     assertTrue(agreement.contains("Discount Percent: " + DISCOUNT + "%"));
-    assertTrue(agreement.contains("Discount Amount: " + DISCOUNT_AMOUNT));
-    assertTrue(agreement.contains("Total Charge: " + TOTAL));
+    assertTrue(agreement.contains("Discount Amount: $" + DISCOUNT_AMOUNT));
+    assertTrue(agreement.contains("Total Charge: $" + TOTAL));
   }
 }
